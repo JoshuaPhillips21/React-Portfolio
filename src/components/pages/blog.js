@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from "axios";
 import BlogItem from '../blog/blog-item'
+import BlogModal from "../modals/blog-modal"
 
 class Blog extends Component {
 constructor() {
@@ -12,12 +13,27 @@ constructor() {
         blogItems: [],
         totalCount: 0,
         currentPage: 0,
-        isLoading: true
+        isLoading: true,
+        blogModalIsOpen: false,
     };
 
     this.getBlogItems = this.getBlogItems.bind(this);
     this.onScroll = this.onScroll.bind(this);
     window.addEventListener("scroll", this.onScroll, false);
+    this.handleNewBlogClick = this.handleNewBlogClick.bind(this);
+    this.handleModalClose = this.handleModalClose.bind(this);
+}
+
+handleModalClose() {
+    this.setState({ 
+        blogModalIsOpen: false
+    });
+}
+
+handleNewBlogClick() {
+    this.setState({
+        blogModalIsOpen: true
+    })
 }
 
 onScroll() {
@@ -43,7 +59,6 @@ getBlogItems() {
     axios.get(`https://joshphillips21.devcamp.space/portfolio/portfolio_blogs?page=${this.state.currentPage}`, 
         { withCredentials: true 
         }).then(response => {
-            console.log("getting", response.data);
             this.setState({
                 blogItems: this.state.blogItems.concat(response.data.portfolio_blogs),
                 totalCount: response.data.meta.total_records,
@@ -68,6 +83,15 @@ render() {
     })
     return (
         <div className='blog-container'>
+            <BlogModal 
+            modalIsOpen={this.state.blogModalIsOpen}
+            handleModalClose={this.handleModalClose}
+            />
+            <div className="new-blog-link">
+            <a onClick={this.handleNewBlogClick}>Open Modal!</a>    
+            </div>
+
+
             <div className='content-container'>{blogRecords}</div>
             
 
