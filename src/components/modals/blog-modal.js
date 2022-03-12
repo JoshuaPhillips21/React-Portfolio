@@ -21,7 +21,13 @@ export default class BlogModal extends Component {
             overlay: {
                 backgroundColor: "rgba(1, 1, 1, 0.75)"
             }
-        }
+        };
+
+        this.handleSuccesfullFormSubmission = this.handleSuccesfullFormSubmission.bind(this);
+    }
+
+    handleSuccesfullFormSubmission(blog) {
+        this.props.handleSuccessfulNewBlogSubmission(blog);
     }
 
     render() {
@@ -33,7 +39,7 @@ export default class BlogModal extends Component {
                     this.props.handleModalClose();
                 }} isOpen={this.props.modalIsOpen}>
                     
-                <BlogForm />
+                <BlogForm handleSuccesfullFormSubmission={this.handleSuccesfullFormSubmission}/>
                 </ReactModal>
             </div>
         );
