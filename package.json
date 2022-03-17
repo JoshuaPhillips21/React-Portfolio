@@ -1,6 +1,9 @@
 {
   "name": "josh-react-portfolio",
   "version": "1.0.0",
+  "engines": {
+    "node": "14.x"
+  },
   "description": "Personal portfolion app built In React",
   "scripts": {
     "preinstall": "npm set audit false",
